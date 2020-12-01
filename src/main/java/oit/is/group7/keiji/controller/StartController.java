@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import java.security.Principal;
 
 @Controller
@@ -33,5 +33,18 @@ public class StartController {
     model.addAttribute("login_user", loginUser);
     return "keiji.html";
   }
+
+   /**
+   * @param username
+   * @param model
+   * @return
+   */
+  @PostMapping("/lec02")
+  public String sample25(@RequestParam String usercomment, ModelMap model) {
+    model.addAttribute("comment", usercomment);
+    return "keiji.html";
+  }
+
+
 
 }
