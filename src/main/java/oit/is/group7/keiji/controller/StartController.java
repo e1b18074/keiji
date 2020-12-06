@@ -54,7 +54,8 @@ public class StartController {
     comment.setUser(user);
     comment.setUserComment(userComment);
     commentMapper.insertComment(comment);
-    model.addAttribute("comment", comment);
+    ArrayList<Comment> allComment = commentMapper.selectAllComment();
+    model.addAttribute("comment", allComment);
     return "keiji.html";
   }
 
