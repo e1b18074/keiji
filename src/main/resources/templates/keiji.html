@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>SpringBoot Sample3-1</title>
+  <title>keijiban</title>
 </head>
 
 <body>
@@ -16,13 +16,13 @@
 
   <p>
   <form action="/lec02" method="post">
-    <input type="text" name="usercomment" />
+    <input type="text" name="userComment" />
     <input type="submit" value="書き込み">
   </form>
   </p>
 
   <p th:if="${comment}">
-    Hi [[${comment}]]
+    [[${comment.number}]] [[${comment.user}]] [[${comment.userComment}]]
   </p>
 
 
