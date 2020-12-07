@@ -1,8 +1,9 @@
 package oit.is.group7.keiji.model;
 
 public class Comment {
-  String name;
-  String comment;
+  int number;
+  String user;
+  String userComment;
 
   /**
    * 引数ありコンストラクタを作る際，Beanであれば必ずデフォルトコンストラクタを明示的に追加すること
@@ -11,4 +12,32 @@ public class Comment {
 
   }
 
+  public Comment(String user, String userComment){
+    this.userComment = userComment;
+    this.user = user;
+  }
+
+  public String getUserComment(){
+    return userComment;
+  }
+
+  public void setUserComment(String userComment){
+    this.userComment = userComment;
+  }
+
+  public String getUser(){
+    return user;
+  }
+
+  public  void setUser(String user){
+    this.user = user;
+  }
+
+  public int getNumber(){
+    return number;
+  }
+
+  public void setNumber(int number){
+    this.number = number;
+  }
 }

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>SpringBoot Sample3-1</title>
+  <title>keiji</title>
 </head>
 
 <body>
@@ -14,20 +14,21 @@
     <a href="/keiji/step2">ログインユーザ名をGETで取得(Sample3-2)</a>
   </p>
 
+  <p th:if="${comment}">
+  <div th:each="comment,stat:${comment}">
+    <tr>
+      [[${comment.number}]] [[${comment.user}]] [[${comment.userComment}]]<br>
+      ==================================================<br>
+    </tr>
+  </div>
+  </p>
+
   <p>
   <form action="/lec02" method="post">
-    <input type="text" name="usercomment" />
+    <input type="text" name="userComment" />
     <input type="submit" value="書き込み">
   </form>
   </p>
-
-  <p th:if="${comment}">
-    Hi [[${comment}]]
-  </p>
-
-
-
-
 
 </body>
 
