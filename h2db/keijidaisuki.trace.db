@@ -1,0 +1,12 @@
+2020-12-08 14:42:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: テーブル "COMMENT" はすでに存在します
+Table "COMMENT" already exists; SQL statement:
+CREATE TABLE comment ( number IDENTITY, user CHAR NOT NULL, userComment CHAR NOT NULL ) [42101-200]
+2020-12-08 14:42:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: テーブル "COMMENT" はすでに存在します
+Table "COMMENT" already exists; SQL statement:
+CREATE TABLE comment ( number IDENTITY, user CHAR NOT NULL, userComment CHAR NOT NULL ) [42101-200]
+2020-12-08 14:43:32 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: テーブル "COMMENT" はすでに存在します
+Table "COMMENT" already exists; SQL statement:
+CREATE TABLE comment ( number IDENTITY, user CHAR NOT NULL, userComment CHAR NOT NULL ) [42101-200]
