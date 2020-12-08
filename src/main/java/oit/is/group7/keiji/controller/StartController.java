@@ -34,13 +34,13 @@ public class StartController {
 
   /**
    * @param model
-   * @param prin
    * @return
    */
   @GetMapping("/keiji/step2")
-  public String sample32(ModelMap model, Principal prin) {
-    String loginUser = prin.getName(); // ログインユーザ情報
-    model.addAttribute("login_user", loginUser);
+  @Transactional
+  public String sample32(ModelMap model) {
+    ArrayList<Comment> allComment = commentMapper.selectAllComment();
+    model.addAttribute("comment", allComment);
     return "keiji.html";
   }
 
