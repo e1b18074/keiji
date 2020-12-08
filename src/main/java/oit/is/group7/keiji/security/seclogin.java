@@ -27,32 +27,22 @@ public class seclogin extends WebSecurityConfigurerAdapter {
         .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("USER");
     auth.inMemoryAuthentication().withUser("user2")
         .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("USER");
-    auth.inMemoryAuthentication().withUser("admin")
-        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("ADMIN");
-
-    // $ sshrun htpasswd -nbBC 10 customer1 Cust0m
-    auth.inMemoryAuthentication().withUser("customer1")
-        .password("$2y$10$8IbzoKwqlCJf.z8/7YThKuSB1nGAQSr8rtHN7pQzm4mx9nrOhsN1C").roles("CUSTOMER");
-    auth.inMemoryAuthentication().withUser("customer2")
-        .password("$2y$10$8IbzoKwqlCJf.z8/7YThKuSB1nGAQSr8rtHN7pQzm4mx9nrOhsN1C").roles("CUSTOMER");
-    auth.inMemoryAuthentication().withUser("seller")
-        .password("$2y$10$8IbzoKwqlCJf.z8/7YThKuSB1nGAQSr8rtHN7pQzm4mx9nrOhsN1C").roles("SELLER");
 
     // 開発中は↓の書き方でも良いが，平文でパスワードが保存される
     // auth.inMemoryAuthentication().withUser("user1").password(passwordEncoder().encode("pAssw0rd")).roles("USER");
-    // auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("pAssw0rd")).roles("ADMIN");
+    // auth.inMemoryAuthentication().withUser("ADMIN").password(passwordEncoder().encode("pAssw0rd")).roles("ADMIN");
 
         auth.inMemoryAuthentication().withUser("nagai")
-        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("USER");
+        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("ADMIN");
 
         auth.inMemoryAuthentication().withUser("fukuoka")
-        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("USER");
+        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("ADMIN");
 
         auth.inMemoryAuthentication().withUser("tanaka")
-        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("USER");
+        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("ADMIN");
 
         auth.inMemoryAuthentication().withUser("tabata")
-        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("USER");
+        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("ADMIN");
   }
 
   @Bean
@@ -68,9 +58,8 @@ public class seclogin extends WebSecurityConfigurerAdapter {
 
     // Spring Securityのフォームを利用してログインを行う
     http.formLogin();
-
-
-    http.authorizeRequests().anyRequest().authenticated();
+    http.authorizeRequests().antMatchers("/keiji/**").authenticated();
+    http.authorizeRequests().antMatchers("/delete/**").authenticated();
     http.csrf().disable();
     http.headers().frameOptions().disable();
 

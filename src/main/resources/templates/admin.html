@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>admin</title>
+</head>
+
+<body>
+  <h1>管理者ページ </h1>
+
+  <p>
+    <a href="/logout">ログアウト</a>
+  </p>
+
+  <p>
+    <a href="/keiji">掲示板に戻る</a>
+  </p>
+
+  削除するコメント番号
+  <form th:action="@{/admin/delete}" method="post">
+    <input type="number" name="number" />
+    <input type="submit" value="削除"><input type="reset" value="リセット">
+  </form>
+
+  <p th:if="${comment}">
+  <div th:each="comment,stat:${comment}">
+    <tr>
+      [[${comment.number}]] [[${comment.user}]] [[${comment.userComment}]]
+      <br>削除しました
+    </tr>
+  </div>
+  </p>
+
+</body>
+
+</html>
