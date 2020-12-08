@@ -30,6 +30,12 @@
   </form>
   </p>
 
+  削除するコメント番号
+  <form th:action="@{/delete}" method="post">
+    <input type="number" name="number" />
+    <input type="submit" value="削除"><input type="reset" value="リセット">
+  </form>
+
 </body>
 
 </html>

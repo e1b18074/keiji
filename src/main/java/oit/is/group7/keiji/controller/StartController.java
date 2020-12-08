@@ -62,4 +62,21 @@ public class StartController {
     return "keiji.html";
   }
 
+  /**
+   * @param model
+   * @param prin
+   * @return
+   */
+  @PostMapping("/delete")
+  @Transactional
+  public String delete(@RequestParam Integer number, ModelMap model){
+    Comment comment = commentMapper.selectByNumber(number);
+    model.addAttribute("deleteComment", comment);
+
+    commentMapper.deleteByNumber(number);
+    ArrayList<Comment> allComment = commentMapper.selectAllComment();
+    model.addAttribute("comment", allComment);
+    return "keiji.html";
+  }
+
 }
