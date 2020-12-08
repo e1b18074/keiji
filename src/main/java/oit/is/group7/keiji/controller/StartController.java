@@ -21,11 +21,14 @@ public class StartController {
 
   /**
    * sample21というGETリクエストがあったら，sample21()を呼び出して，sample21.htmlを返すメソッド
-   *
+   * @param model
    * @return
    */
   @GetMapping("/keiji")
-  public String keiji() {
+  @Transactional
+  public String keiji(ModelMap model) {
+    ArrayList<Comment> allComment = commentMapper.selectAllComment();
+    model.addAttribute("comment", allComment);
     return "keiji.html";
   }
 
