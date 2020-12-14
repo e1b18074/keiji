@@ -14,9 +14,11 @@
     <a href="keiji/update">更新</a>
   </p>
 
-  <p>
-    <a href="/keiji/admin">管理者ページ</a>
-  </p>
+  <tbody sec:authorize="hasRole('ROLE_ADMIN')">
+    <p>
+      <a href="/keiji/admin">管理者ページ</a>
+    </p>
+  </tbody>
 
   <p th:if="${comment}">
   <div th:each="comment,stat:${comment}">

@@ -59,7 +59,7 @@ public class seclogin extends WebSecurityConfigurerAdapter {
     // Spring Securityのフォームを利用してログインを行う
     http.formLogin();
     http.authorizeRequests().antMatchers("/keiji/**").authenticated();
-    http.authorizeRequests().antMatchers("/delete/**").authenticated();
+
     http.csrf().disable();
     http.headers().frameOptions().disable();
 
