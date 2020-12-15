@@ -36,7 +36,7 @@ public class StartController {
    * @param model
    * @return
    */
-  @GetMapping("/keiji/step2")
+  @GetMapping("/keiji/update")
   @Transactional
   public String sample32(ModelMap model) {
     ArrayList<Comment> allComment = commentMapper.selectAllComment();
@@ -49,7 +49,7 @@ public class StartController {
    * @param prin
    * @return
    */
-  @PostMapping("/lec02")
+  @PostMapping("/keiji/comment")
   @Transactional
   public String sample25(@RequestParam String userComment, ModelMap model, Principal prin) {
     String user = prin.getName();
@@ -60,6 +60,11 @@ public class StartController {
     ArrayList<Comment> allComment = commentMapper.selectAllComment();
     model.addAttribute("comment", allComment);
     return "keiji.html";
+  }
+
+  @GetMapping("/keiji/admin")
+  public String admin() {
+    return "admin.html";
   }
 
 }

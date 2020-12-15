@@ -11,8 +11,14 @@
   <a href="/logout">ログアウト</a>
 
   <p>
-    <a href="/keiji/step2">更新</a>
+    <a href="keiji/update">更新</a>
   </p>
+
+  <tbody sec:authorize="hasRole('ROLE_ADMIN')">
+    <p>
+      <a href="/keiji/admin">管理者ページ</a>
+    </p>
+  </tbody>
 
   <p th:if="${comment}">
   <div th:each="comment,stat:${comment}">
@@ -24,7 +30,7 @@
   </p>
 
   <p>
-  <form action="/lec02" method="post">
+  <form action="/keiji/comment" method="post">
     <input type="text" name="userComment" />
     <input type="submit" value="書き込み">
   </form>
