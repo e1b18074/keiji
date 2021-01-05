@@ -1,70 +1,47 @@
 package oit.is.group7.keiji.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-/**
- * Sample3AuthConfiguration
- */
 @Configuration
 @EnableWebSecurity
 public class seclogin extends WebSecurityConfigurerAdapter {
-
-  /**
-   * 誰がログインできるか(認証処理)
-   */
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-    // $ sshrun htpasswd -nbBC 10 user1 pAssw0rd
-    auth.inMemoryAuthentication().withUser("user1")
-        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("USER");
-    auth.inMemoryAuthentication().withUser("user2")
-        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("USER");
-
-    // 開発中は↓の書き方でも良いが，平文でパスワードが保存される
-    // auth.inMemoryAuthentication().withUser("user1").password(passwordEncoder().encode("pAssw0rd")).roles("USER");
-    // auth.inMemoryAuthentication().withUser("ADMIN").password(passwordEncoder().encode("pAssw0rd")).roles("ADMIN");
-
-        auth.inMemoryAuthentication().withUser("nagai")
-        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("ADMIN");
-
-        auth.inMemoryAuthentication().withUser("fukuoka")
-        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("ADMIN");
-
-        auth.inMemoryAuthentication().withUser("tanaka")
-        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("ADMIN");
-
-        auth.inMemoryAuthentication().withUser("tabata")
-        .password("$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC").roles("ADMIN");
-  }
 
   @Bean
   PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
   }
 
-  /**
-   * 認証されたユーザがどこにアクセスできるか（認可処理）
-   */
   @Override
   protected void configure(HttpSecurity http) throws Exception {
 
-    // Spring Securityのフォームを利用してログインを行う
-    http.formLogin();
-    http.authorizeRequests().antMatchers("/keiji/**").authenticated();
+
+
+    http.authorizeRequests() // Spring Securityのフォームを利用してログインを行う
+        .antMatchers("/", "/login").permitAll() // 認証なしでアクセス可能なパス
+        .anyRequest().authenticated(); // それ以外は認証が必要
+    http.formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/keiji") // ログイン成功時に遷移するURL
+                .usernameParameter("username") // ログインフォームのユーザー欄のname属性を設定
+                .passwordParameter("password") // ログインフォームのパスワード欄のname属性を設定
+                .failureUrl("/login?error") // ログイン失敗時に遷移するURL
+                .permitAll();
+    http.logout().logoutSuccessUrl("/");
 
     http.csrf().disable();
     http.headers().frameOptions().disable();
 
-    // Spring Securityの機能を利用してログアウト．ログアウト時は http://localhost:8000/ に戻る
-    http.logout().logoutSuccessUrl("/");
   }
 
 }
