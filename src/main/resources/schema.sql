@@ -9,3 +9,12 @@ CREATE TABLE IF NOT EXISTS comment2 (
     user CHAR NOT NULL,
     userComment CHAR NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS userInfo (
+  number IDENTITY,
+  id CHAR NOT NULL,
+  name CHAR NOT NULL,
+  password CHAR NOT NULL,
+  role CHAR DEFAULT 'ROLE_USER',
+  enabled boolean DEFAULT true
+);

@@ -7,11 +7,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
 import java.security.Principal;
 import java.util.ArrayList;
 
 import oit.is.group7.keiji.model.Comment;
 import oit.is.group7.keiji.model.CommentMapper;
+import oit.is.group7.keiji.model.UserInfo;
 
 @Controller
 public class StartController {
@@ -38,7 +42,7 @@ public class StartController {
    */
   @GetMapping("/keiji/update")
   @Transactional
-  public String sample32(ModelMap model) {
+  public String update(ModelMap model) {
     ArrayList<Comment> allComment = commentMapper.selectAllComment();
     model.addAttribute("comment", allComment);
     return "keiji.html";
@@ -51,8 +55,9 @@ public class StartController {
    */
   @PostMapping("/keiji/comment")
   @Transactional
-  public String sample25(@RequestParam String userComment, ModelMap model, Principal prin) {
-    String user = prin.getName();
+  public String sample25(@RequestParam String userComment, Authentication authentication, ModelMap model) {
+    UserInfo userInfo = (UserInfo)authentication.getPrincipal();
+    String user = userInfo.getUserName();
     Comment comment = new Comment();
     comment.setUser(user);
     comment.setUserComment(userComment);
