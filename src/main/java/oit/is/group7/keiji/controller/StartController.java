@@ -1,5 +1,7 @@
 package oit.is.group7.keiji.controller;
 
+import oit.is.group7.keiji.security.AuthUtil;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +56,9 @@ public class StartController {
    */
   @PostMapping("/keiji/comment")
   @Transactional
-  public String comment(@RequestParam String userComment, Authentication authentication, ModelMap model) {
-    UserInfo userInfo = (UserInfo)authentication.getPrincipal();
-    String user = userInfo.getUserName();
+  public String comment(@RequestParam String userComment, ModelMap model) {
+    UserInfo userInfo = AuthUtil.getUserInfo();
+    String user = userInfo.getName();
     Comment comment = new Comment();
     comment.setUser(user);
     comment.setUserComment(userComment);

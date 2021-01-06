@@ -23,7 +23,8 @@
   <p th:if="${comment}">
   <div th:each="comment,stat:${comment}">
     <tr>
-      [[${comment.number}]] [[${comment.user}]] [[${comment.userComment}]]<form action="/keiji/comment" method="post">
+      [[${comment.number}]] [[${comment.user}]] [[${comment.userComment}]]
+      <form action="/keiji/good" method="post">
         <input type="text" name="userComment" />
         <input type="submit" value="いいね">
       </form><br>

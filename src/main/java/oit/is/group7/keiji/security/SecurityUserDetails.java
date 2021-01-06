@@ -17,7 +17,7 @@ public class SecurityUserDetails extends User {
     private final UserInfo userInfo;
 
     public SecurityUserDetails(UserInfo userInfo, String password) {
-        super(userInfo.getUserName(), password, Collections.emptyList());
+        super(userInfo.getName(), password, Collections.emptyList());
         this.userInfo = userInfo;
     }
 

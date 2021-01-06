@@ -41,13 +41,13 @@ class SecurityUserDetailsService implements UserDetailsService {
         try {
             UserInfo user = userInfoMapper.selectByUser(username);
             Collection<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(user.getUserRole()));
+            authorities.add(new SimpleGrantedAuthority(user.getRole()));
             //return new UserInfo(user.getUserName(), user.getPassword(), authorities);
 
             if (user != null) {
               UserInfo userInfo = new UserInfo();
-              userInfo.setUserId(user.getUserId());
-              userInfo.setUserName(user.getUserName());
+              userInfo.setId(user.getId());
+              userInfo.setName(user.getName());
               // さらに、Spring Security用の認証情報も生成
               return new SecurityUserDetails(userInfo, user.getPassword());
             } else {
