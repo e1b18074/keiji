@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
-import java.security.Principal;	import java.security.Principal;
-import java.util.ArrayList;	import java.util.ArrayList;
+import java.security.Principal;
+import java.util.ArrayList;
 
-
-import oit.is.group7.keiji.model.Comment;	import oit.is.group7.keiji.model.Comment;
-import oit.is.group7.keiji.model.CommentMapper;	import oit.is.group7.keiji.model.CommentMapper;
+import oit.is.group7.keiji.model.Comment;
+import oit.is.group7.keiji.model.CommentMapper;
 import oit.is.group7.keiji.model.UserInfo;
 
 @Controller
