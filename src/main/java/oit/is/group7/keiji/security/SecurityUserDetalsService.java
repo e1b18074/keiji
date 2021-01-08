@@ -8,7 +8,7 @@ import oit.is.group7.keiji.model.UserInfoMapper;
 import oit.is.group7.keiji.security.SecurityUserDetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,14 +40,10 @@ class SecurityUserDetailsService implements UserDetailsService {
 
         try {
             UserInfo user = userInfoMapper.selectByUser(username);
-            Collection<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(user.getRole()));
-            //return new UserInfo(user.getUserName(), user.getPassword(), authorities);
+            Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(user.getRole());
 
             if (user != null) {
-              UserInfo userInfo = new UserInfo();
-              userInfo.setId(user.getId());
-              userInfo.setName(user.getName());
+              UserInfo userInfo = new UserInfo(user.getId(), user.getName(), authorities);
               // さらに、Spring Security用の認証情報も生成
               return new SecurityUserDetails(userInfo, user.getPassword());
             } else {
@@ -60,7 +56,7 @@ class SecurityUserDetailsService implements UserDetailsService {
             // 例外を捕まえ、適正なメッセージを持った別の例外に変えて投げ直す。
             // こうしておかないと、発生した元のExceptionの持つエラーメッセージがログイン画面に表示されてしまう
             throw new DbAccessException(
-                    messageSource.getMessage("demo.unexpectedError", null, LocaleContextHolder.getLocale()), e);
+                    messageSource.getMessage("データベースへの接続に失敗しました", null, LocaleContextHolder.getLocale()), e);
         }
     }
 
