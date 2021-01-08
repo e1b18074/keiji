@@ -43,9 +43,9 @@ class SecurityUserDetailsService implements UserDetailsService {
             Collection<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(user.getRole());
 
             if (user != null) {
-              UserInfo userInfo = new UserInfo(user.getId(), user.getName(), authorities);
+              UserInfo userInfo = new UserInfo(user.getName(), user.getPassword(), authorities);
               // さらに、Spring Security用の認証情報も生成
-              return new SecurityUserDetails(userInfo, user.getPassword());
+              return new SecurityUserDetails(userInfo);
             } else {
               // ユーザが見つからなかった場合、規定の例外を投げる。
               // なお、UsernameNotFoundExceptionにメッセージを渡しても画面に反映されない（上記と同じ）
