@@ -4,6 +4,7 @@ public class Comment {
   int number;
   String user;
   String userComment;
+  int good;
 
   /**
    * 引数ありコンストラクタを作る際，Beanであれば必ずデフォルトコンストラクタを明示的に追加すること
@@ -39,5 +40,13 @@ public class Comment {
 
   public void setNumber(int number){
     this.number = number;
+  }
+
+  public int getGood(){
+    return good;
+  }
+
+  public void setGood(int good){
+    this.good = good;
   }
 }

@@ -26,10 +26,10 @@ public class seclogin extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
 
 
-
+    http.authorizeRequests().antMatchers("/h2-console").hasRole("ADMIN");
     http.authorizeRequests() // Spring Securityのフォームを利用してログインを行う
-        .antMatchers("/", "/login").permitAll() // 認証なしでアクセス可能なパス
-        .anyRequest().authenticated(); // それ以外は認証が必要
+        .antMatchers("/keiji/**").authenticated() // 認証なしでアクセス可能なパス
+        .anyRequest().permitAll(); // それ以外は認証が必要
     http.formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/keiji") // ログイン成功時に遷移するURL

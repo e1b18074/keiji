@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class UserInfo {
 
     private int number;
-    private String id;
     private String name;
     private String password;
     private String role;
@@ -36,46 +35,38 @@ public class UserInfo {
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.authorities;
     }
 
-    public int getUserNumber() {
+    public int getNumber() {
         return this.number;
     }
 
-    public void setUserNumber(int number){
+    public void setNumber(int number){
         this.number = number;
-    }
-
-    public String getUserId() {
-        return this.id;
-    }
-
-    public void setUserId(String id){
-        this.id = id;
     }
 
     public String getPassword() {
         return this.password;
     }
 
-    public void setUserPassword(String password){
+    public void setPassword(String password){
         this.password = password;
     }
 
-    public String getUserName() {
+    public String getName() {
         return this.name;
     }
 
-    public void setUserName(String name){
+    public void setName(String name){
         this.name = name;
     }
 
-    public String getUserRole() {
+    public String getRole() {
         return this.role;
     }
 
-    public void setUserRole(String role){
+    public void setRole(String role){
         this.role = role;
     }
 
