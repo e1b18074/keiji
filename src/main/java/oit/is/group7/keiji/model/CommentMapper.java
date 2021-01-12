@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Delete;
-
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface CommentMapper {
@@ -35,4 +35,9 @@ public interface CommentMapper {
   @Delete("DELETE FROM COMMENT WHERE NUMBER =#{number}")
   boolean deleteByNumber(int number);
 
+  /**
+   * @param comment
+   */
+  @Update("UPDATE COMMENT SET GOOD= #{good}+1 WHERE NUMBER = #{number}")
+  void updateComment(Comment comment);
 }

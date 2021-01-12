@@ -27,6 +27,7 @@ public class StartController {
 
   /**
    * sample21というGETリクエストがあったら，sample21()を呼び出して，sample21.htmlを返すメソッド
+   * 
    * @param model
    * @return
    */
@@ -50,7 +51,7 @@ public class StartController {
     return "keiji.html";
   }
 
-   /**
+  /**
    * @param model
    * @return
    */
@@ -63,7 +64,7 @@ public class StartController {
     comment.setUser(user);
     comment.setUserComment(userComment);
     commentMapper.insertComment(comment);
-    if(comment.getNumber() >= 100){
+    if (comment.getNumber() >= 100) {
 
     }
     ArrayList<Comment> allComment = commentMapper.selectAllComment();
@@ -76,4 +77,18 @@ public class StartController {
     return "admin.html";
   }
 
+  /**
+   * @param model
+   * @param num
+   * @return
+   */
+  @PostMapping("/keiji/good")
+  @Transactional
+  public String good(ModelMap model, @RequestParam String num) {
+    Comment comment = commentMapper.selectByNumber(Integer.parseInt(num));
+    commentMapper.updateComment(comment);
+    ArrayList<Comment> allComment = commentMapper.selectAllComment();
+    model.addAttribute("comment", allComment);
+    return "keiji.html";
+  }
 }
