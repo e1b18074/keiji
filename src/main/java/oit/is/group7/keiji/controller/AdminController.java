@@ -26,9 +26,10 @@ public class AdminController {
   @Transactional
   public String delete(@RequestParam Integer number, ModelMap model){
     Comment comment = commentMapper.selectByNumber(number);
-    model.addAttribute("comment", comment);
-
+    model.addAttribute("deleteComment", comment);
     commentMapper.deleteByNumber(number);
+    ArrayList<Comment> allComment = commentMapper.selectAllComment();
+    model.addAttribute("comment", allComment);
     return "admin.html";
   }
 

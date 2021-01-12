@@ -27,7 +27,7 @@ public class StartController {
 
   /**
    * sample21というGETリクエストがあったら，sample21()を呼び出して，sample21.htmlを返すメソッド
-   * 
+   *
    * @param model
    * @return
    */
@@ -72,8 +72,14 @@ public class StartController {
     return "keiji.html";
   }
 
+  /**
+   * @param model
+   * @return
+   */
   @GetMapping("/keiji/admin")
-  public String admin() {
+  public String admin(ModelMap model) {
+    ArrayList<Comment> allComment = commentMapper.selectAllComment();
+    model.addAttribute("comment", allComment);
     return "admin.html";
   }
 
