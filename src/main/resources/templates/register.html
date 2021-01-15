@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>register</title>
+</head>
+
+<body>
+  <h1>新規登録ページです </h1>
+
+  <p>
+    <a href="/logout">戻る</a>
+  </p>
+
+  <p th:if="${userInfo}">
+  <div th:each="userInfo,stat:${userInfo}">
+    <tr>
+      [[${userInfo.name}]] [[${userInfo.role}]]
+    </tr>
+  </div>
+  </p>
+
+  <p th:if="${errorMessage}">
+    [[${errorMessage}]]
+  </p>
+
+  <form action="/register/addUser" method="post">
+    <p>
+      <input type="text" id="username" name="username" class="form-control" placeholder="ユーザ名">
+    </p>
+    <p>
+      <input type="password" id="password" name="password" class="form-control" placeholder="パスワード">
+    </p>
+    <input type="submit" value="新規登録" />
+  </form>
+</body>
+
+</html>

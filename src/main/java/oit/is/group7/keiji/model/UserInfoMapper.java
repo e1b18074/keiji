@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Update;
 
 
 @Mapper
@@ -25,6 +26,12 @@ public interface UserInfoMapper {
   @Select("SELECT * from userInfo WHERE number = #{number}")
   UserInfo selectByNumber(int number);
 
+   /**
+   * @return
+   */
+  @Select("SELECT * from userInfo WHERE role = #{role}")
+  ArrayList<UserInfo> selectByRole(String role);
+
   /**
    * @return
    */
@@ -34,13 +41,18 @@ public interface UserInfoMapper {
   /**
    * @param userInfo
    */
-  @Insert("INSERT INTO userInfo (name, password, role) VALUES (#{name},#{password},#{role});")
-  //@Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
+  @Insert("INSERT INTO userInfo (name, password) VALUES (#{name},#{password});")
+  @Options(useGeneratedKeys = true, keyColumn = "number", keyProperty = "number")
   void insertUserInfo(UserInfo userInfo);
 
+  /**
+   * @param userInfo
+   */
+  @Update("UPDATE USERINFO SET NAME = #{name} WHERE NUMBER = #{number}")
+  void updateName(UserInfo userInfo);
 
   /**
-   * @param id
+   * @param number
    * @return
    */
   @Delete("DELETE FROM userInfo WHERE number =#{number}")

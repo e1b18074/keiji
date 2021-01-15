@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>modification</title>
+</head>
+
+<body>
+  <h1>登録内容変更ページです </h1>
+
+  <p>
+    <a href="/logout">ログアウト</a>
+  </p>
+
+  <p th:if="${loginUser}">
+  <div th:each="userInfo,stat:${loginUser}">
+    <tr>
+      [[${loginUser.name}]] [[${loginUser.role}]]
+    </tr>
+  </div>
+
+  <form action="/modify/nameChange" method="post">
+    <input type="hidden" name="number" th:value="${loginUser.number}" />
+    <input type="text" id="username" name="username" class="form-control" placeholder="ユーザ名">
+    <input type="submit" value="名前変更" />
+  </form>
+
+  <p th:if="${changeMessage}">
+    [[${changeMessage}]]
+  </p>
+  </p>
+
+  <tbody sec:authorize="hasRole('ROLE_ADMIN')">
+    <p th:if="${userInfo}">
+      ユーザー一覧
+    <table border="1">
+      <thead>
+        <th>ユーザー番号</th>
+        <th>ユーザー名</th>
+        <th>ロール名</th>
+        <th>処理</th>
+      </thead>
+      <tr th:each="userInfo,stat:${userInfo}">
+        <td>[[${userInfo.number}]]</td>
+        <td>[[${userInfo.name}]]</td>
+        <td>[[${userInfo.role}]]</td>
+        <td>
+          <form action="/modify/deleteUser" method="post">
+            <input type="hidden" name="number" th:value="${userInfo.number}" />
+            <input type="submit" value="削除">
+          </form>
+        </td>
+      <tr>
+    </table>
+    </p>
+
+    <p th:if="${errorMessage}">
+      [[${errorMessage}]]
+    </p>
+
+    <p th:if="${deleteUserInfo}">
+    <div th:each="deleteUserInfo,stat:${deleteUserInfo}">
+      <tr>
+        [[${deleteUserInfo.number}]] [[${deleteUserInfo.name}]] [[${deleteUserInfo.role}]]
+        <br>削除しました
+      </tr>
+    </div>
+    </p>
+  </tbody>
+
+</body>
+
+</html>
