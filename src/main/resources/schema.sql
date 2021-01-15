@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS comment2 (
 );
 
 CREATE TABLE IF NOT EXISTS userInfo (
-  number IDENTITY,
-  name CHAR NOT NULL,
+  number INT AUTO_INCREMENT,
+  name CHAR NOT NULL PRIMARY KEY,
   password CHAR NOT NULL,
   role CHAR DEFAULT 'ROLE_USER',
   enabled boolean DEFAULT true
