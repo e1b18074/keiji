@@ -12,21 +12,35 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface CommentMapper {
 
-  @Select("SELECT * from comment WHERE NUMBER = #{number}")
+  /**
+   * @return
+   */
+  @Select("SELECT * from COMMENT WHERE NUMBER = #{number}")
   Comment selectByNumber(int number);
 
   /**
    * @return
    */
-  @Select("select * from COMMENT;")
+  @Select("SELECT * from COMMENT ORDER BY NUMBER DESC;")
   ArrayList<Comment> selectAllComment();
+
+  /**
+   * @return
+   */
+  @Select("select count(*) from COMMENT;")
+  int selectCountComment();
 
   /**
    * @param comment
    */
   @Insert("INSERT INTO comment (user,userComment) VALUES (#{user},#{userComment});")
-  @Options(useGeneratedKeys = true, keyColumn = "number", keyProperty = "number")
   void insertComment(Comment comment);
+
+  /**
+   * @param comment
+   */
+  @Insert("INSERT INTO comment (number,user,userComment,good) VALUES (#{number},#{user},#{userComment},#{good});")
+  void insertCommentCopy(Comment comment);
 
   /**
    * @param number
@@ -34,6 +48,12 @@ public interface CommentMapper {
    */
   @Delete("DELETE FROM COMMENT WHERE NUMBER =#{number}")
   boolean deleteByNumber(int number);
+
+  /**
+   * @return
+   */
+  @Delete("DELETE FROM COMMENT")
+  boolean deleteAllComment();
 
   /**
    * @param comment
