@@ -9,17 +9,24 @@
 
 <body>
   <h1>掲示板へようこそ! </h1>
-  <a href="/logout">ログアウト</a>
+  <a href="/logout">ログアウト</a><br>
 
   <p>
-    <a href="/keiji/update">更新</a>
+    <a href="/keiji/update">更新</a><br>
   </p>
 
   <tbody sec:authorize="hasRole('ROLE_ADMIN')">
     <p>
-      <a href="/keiji/admin">管理者ページ</a>
+      <a href="/keiji/admin">管理者ページ</a><br>
     </p>
   </tbody>
+
+  <p>
+  <form action="/keiji/comment" method="post">
+    <input type="text" name="userComment" />
+    <input type="submit" value="書き込み">
+  </form>
+  </p>
 
   <p th:if="${comment}">
   <div th:each="comment,stat:${comment}">
@@ -27,20 +34,12 @@
       [[${comment.number}]] [[${comment.user}]] [[${comment.userComment}]]
       [[${comment.good}]]
       <form action="/keiji/good" method="post">
-        <input type="hidden" name="num" th:value="${comment.number}" />
+        <input type="hidden" name="num" th:value="${comment.number}">
         <input type="submit" value="いいね">
       </form>
-      <br>
       ==================================================<br>
     </tr>
   </div>
-  </p>
-
-  <p>
-  <form action="/keiji/comment" method="post">
-    <input type="text" name="userComment" />
-    <input type="submit" value="書き込み">
-  </form>
   </p>
 
 </body>

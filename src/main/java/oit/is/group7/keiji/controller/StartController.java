@@ -64,10 +64,14 @@ public class StartController {
     comment.setUser(user);
     comment.setUserComment(userComment);
     commentMapper.insertComment(comment);
-    if (comment.getNumber() >= 100) {
-
-    }
     ArrayList<Comment> allComment = commentMapper.selectAllComment();
+    int num = commentMapper.selectCountComment();
+    if (num >= 7) {
+      commentMapper.deleteAllComment();
+      for (int i = 0; i < 3; i++) {
+        commentMapper.insertCommentCopy(allComment.get(i));
+      }
+    }
     model.addAttribute("comment", allComment);
     return "keiji.html";
   }
