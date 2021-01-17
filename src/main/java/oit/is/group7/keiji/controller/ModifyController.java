@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import oit.is.group7.keiji.service.AdminRegisterService;
 import oit.is.group7.keiji.security.AuthUtil;
@@ -33,7 +35,12 @@ public class ModifyController {
   @GetMapping("/modify")
   @Transactional
   public String register(ModelMap model) {
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+    String loginDate = dateFormat.format(date);
     UserInfo loginUser = userInfoMapper.selectByUser(AuthUtil.getUserInfo().getName());
+    loginUser.setDate(loginDate);
+    userInfoMapper.updateLoginDate(loginUser);
     model.addAttribute("loginUser", loginUser);
     ArrayList<UserInfo> roleUsers = userInfoMapper.selectByRole("ROLE_USER");
     model.addAttribute("userInfo", roleUsers);
@@ -49,7 +56,13 @@ public class ModifyController {
   @PostMapping("/modify/nameChange")
   @Transactional
   public String nameChange(@RequestParam int number, @RequestParam String username, ModelMap model) {
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+    String loginDate = dateFormat.format(date);
+
     UserInfo loginUser = userInfoMapper.selectByNumber(number);
+    loginUser.setDate(loginDate);
+    userInfoMapper.updateLoginDate(loginUser);
 
     if (loginUser.getRole().equals("ROLE_MASTER")) {
       model.addAttribute("changeMessage", "ロール名がMASTERのユーザは変更できません");
@@ -140,13 +153,19 @@ public class ModifyController {
   @PostMapping("/modify/addAdmin")
   @Transactional
   public String addUser(@RequestParam String username, @RequestParam String password, ModelMap model) {
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+    String loginDate = dateFormat.format(date);
+
     if (userInfoMapper.selectByUser(username) == null) {
       UserInfo userInfo = newAdmin.setAdminInfo(username, password);
+      userInfo.setDate(loginDate);
       userInfoMapper.insertUserInfo(userInfo);
       model.addAttribute("userInfo", userInfo);
     } else {
       model.addAttribute("errorMessage", "そのユーザー名はすでに使用されています");
     }
+
     UserInfo loginUser = userInfoMapper.selectByUser(AuthUtil.getUserInfo().getName());
     model.addAttribute("loginUser", loginUser);
     ArrayList<UserInfo> roleUsers = userInfoMapper.selectByRole("ROLE_USER");

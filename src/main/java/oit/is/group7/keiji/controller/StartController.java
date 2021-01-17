@@ -14,16 +14,22 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import oit.is.group7.keiji.model.Comment;
 import oit.is.group7.keiji.model.CommentMapper;
 import oit.is.group7.keiji.model.UserInfo;
+import oit.is.group7.keiji.model.UserInfoMapper;
 
 @Controller
 public class StartController {
 
   @Autowired
   CommentMapper commentMapper;
+
+  @Autowired
+  UserInfoMapper userInfoMapper;
 
   /**
    * sample21というGETリクエストがあったら，sample21()を呼び出して，sample21.htmlを返すメソッド
@@ -34,6 +40,13 @@ public class StartController {
   @GetMapping("/keiji")
   @Transactional
   public String keiji(ModelMap model) {
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+    String loginDate = dateFormat.format(date);
+    UserInfo userInfo = AuthUtil.getUserInfo();
+    userInfo.setDate(loginDate);
+    userInfoMapper.updateLoginDate(userInfo);
+
     ArrayList<Comment> allComment = commentMapper.selectAllComment();
     model.addAttribute("comment", allComment);
     return "keiji.html";
@@ -46,6 +59,13 @@ public class StartController {
   @GetMapping("/keiji/update")
   @Transactional
   public String update(ModelMap model) {
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+    String loginDate = dateFormat.format(date);
+    UserInfo userInfo = AuthUtil.getUserInfo();
+    userInfo.setDate(loginDate);
+    userInfoMapper.updateLoginDate(userInfo);
+
     ArrayList<Comment> allComment = commentMapper.selectAllComment();
     model.addAttribute("comment", allComment);
     return "keiji.html";
@@ -58,11 +78,19 @@ public class StartController {
   @PostMapping("/keiji/comment")
   @Transactional
   public String comment(@RequestParam String userComment, ModelMap model) {
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+    String loginDate = dateFormat.format(date);
     UserInfo userInfo = AuthUtil.getUserInfo();
     String user = userInfo.getName();
     Comment comment = new Comment();
+
+    userInfo.setDate(loginDate);
+    userInfoMapper.updateLoginDate(userInfo);
+
     comment.setUser(user);
     comment.setUserComment(userComment);
+    comment.setDate(loginDate);
     commentMapper.insertComment(comment);
     ArrayList<Comment> allComment = commentMapper.selectAllComment();
     int num = commentMapper.selectCountComment();
@@ -82,6 +110,13 @@ public class StartController {
    */
   @GetMapping("/keiji/admin")
   public String admin(ModelMap model) {
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+    String loginDate = dateFormat.format(date);
+    UserInfo userInfo = AuthUtil.getUserInfo();
+    userInfo.setDate(loginDate);
+    userInfoMapper.updateLoginDate(userInfo);
+
     ArrayList<Comment> allComment = commentMapper.selectAllComment();
     model.addAttribute("comment", allComment);
     return "admin.html";
@@ -95,6 +130,13 @@ public class StartController {
   @PostMapping("/keiji/good")
   @Transactional
   public String good(ModelMap model, @RequestParam String num) {
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+    String loginDate = dateFormat.format(date);
+    UserInfo userInfo = AuthUtil.getUserInfo();
+    userInfo.setDate(loginDate);
+    userInfoMapper.updateLoginDate(userInfo);
+
     Comment comment = commentMapper.selectByNumber(Integer.parseInt(num));
     commentMapper.updateComment(comment);
     ArrayList<Comment> allComment = commentMapper.selectAllComment();

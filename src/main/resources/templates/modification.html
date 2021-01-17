@@ -39,12 +39,14 @@
         <th>ユーザー番号</th>
         <th>ユーザー名</th>
         <th>ロール名</th>
+        <th>最終ログイン日時</th>
         <th>処理</th>
       </thead>
       <tr th:each="userInfo,stat:${userInfo}">
         <td>[[${userInfo.number}]]</td>
         <td>[[${userInfo.name}]]</td>
         <td>[[${userInfo.role}]]</td>
+        <td>[[${userInfo.date}]]</td>
         <td>
           <form action="/modify/deleteUser" method="post">
             <input type="hidden" name="number" th:value="${userInfo.number}" />
@@ -84,12 +86,14 @@
         <th>ユーザー番号</th>
         <th>ユーザー名</th>
         <th>ロール名</th>
+        <th>最終ログイン日時</th>
         <th>処理</th>
       </thead>
       <tr th:each="userInfo,stat:${userInfo}">
         <td>[[${userInfo.number}]]</td>
         <td>[[${userInfo.name}]]</td>
         <td>[[${userInfo.role}]]</td>
+        <td>[[${userInfo.date}]]</td>
         <td>
           <form action="/modify/deleteUser" method="post">
             <input type="hidden" name="number" th:value="${userInfo.number}" />
@@ -101,6 +105,7 @@
         <td>[[${adminUserInfo.number}]]</td>
         <td>[[${adminUserInfo.name}]]</td>
         <td>[[${adminUserInfo.role}]]</td>
+        <td>[[${adminUserInfo.date}]]</td>
         <td>
           <form action="/modify/deleteAdmin" method="post">
             <input type="hidden" name="number" th:value="${adminUserInfo.number}" />

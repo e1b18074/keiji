@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import oit.is.group7.keiji.service.UserRegisterService;
 import oit.is.group7.keiji.model.UserInfo;
@@ -37,8 +39,13 @@ public class RegisterController {
   @PostMapping("/register/addUser")
   @Transactional
   public String addUser(@RequestParam String username, @RequestParam String password, ModelMap model) {
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+    String loginDate = dateFormat.format(date);
+
     if (userInfoMapper.selectByUser(username) == null) {
       UserInfo userInfo = newUser.setUserInfo(username, password);
+      userInfo.setDate(loginDate);
       userInfoMapper.insertUserInfo(userInfo);
       model.addAttribute("userInfo", userInfo);
     } else {

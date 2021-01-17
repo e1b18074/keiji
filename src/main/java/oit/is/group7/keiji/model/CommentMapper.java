@@ -33,13 +33,13 @@ public interface CommentMapper {
   /**
    * @param comment
    */
-  @Insert("INSERT INTO comment (user,userComment) VALUES (#{user},#{userComment});")
+  @Insert("INSERT INTO comment (user,userComment,date) VALUES (#{user},#{userComment},#{date});")
   void insertComment(Comment comment);
 
   /**
    * @param comment
    */
-  @Insert("INSERT INTO comment (number,user,userComment,good) VALUES (#{number},#{user},#{userComment},#{good});")
+  @Insert("INSERT INTO comment (number,user,userComment,good) VALUES (#{number},#{user},#{userComment},#{date},#{good});")
   void insertCommentCopy(Comment comment);
 
   /**

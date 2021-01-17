@@ -25,6 +25,7 @@
         <th>コミット番号</th>
         <th>ユーザー名</th>
         <th>コメント内容</th>
+        <th>日時</th>
         <th>いいね数</th>
         <th>処理</th>
       </thead>
@@ -32,6 +33,7 @@
         <td>[[${comment.number}]]</td>
         <td>[[${comment.user}]]</td>
         <td>[[${comment.userComment}]]</td>
+        <td>[[${comment.date}]]</td>
         <td>[[${comment.good}]]</td>
         <td>
           <form action="/admin/delete" method="post">
@@ -46,7 +48,8 @@
     <p th:if="${deleteComment}">
     <div th:each="comment,stat:${deleteComment}">
       <tr>
-        [[${deleteComment.number}]] [[${deleteComment.user}]] [[${deleteComment.userComment}]]
+        [[${deleteComment.number}]] [[${deleteComment.user}]] [[${deleteComment.userComment}]] [[${comment.date}]]
+        [[${comment.good}]]
         <br>削除しました
       </tr>
     </div>

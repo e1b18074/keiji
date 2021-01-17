@@ -16,6 +16,7 @@ public class UserInfo {
     private int number;
     private String name;
     private String password;
+    private String date;
     private String role;
     private boolean enabled;
     private boolean AccountNonExpired;
@@ -60,6 +61,14 @@ public class UserInfo {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public String getDate(){
+    return date;
+  }
+
+    public  void setDate(String date){
+      this.date = date;
     }
 
     public String getRole() {

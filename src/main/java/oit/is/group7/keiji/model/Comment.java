@@ -4,6 +4,7 @@ public class Comment {
   int number;
   String user;
   String userComment;
+  String date;
   int good;
 
   /**
@@ -32,6 +33,14 @@ public class Comment {
 
   public  void setUser(String user){
     this.user = user;
+  }
+
+  public String getDate(){
+    return date;
+  }
+
+  public  void setDate(String date){
+    this.date = date;
   }
 
   public int getNumber(){
