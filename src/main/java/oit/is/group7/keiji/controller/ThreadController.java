@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+
 import oit.is.group7.keiji.model.Comment;
 import oit.is.group7.keiji.model.CommentMapper;
 import oit.is.group7.keiji.model.Thread;
@@ -25,7 +26,7 @@ import oit.is.group7.keiji.model.UserInfo;
 import oit.is.group7.keiji.model.UserInfoMapper;
 
 @Controller
-public class StartController {
+public class ThreadController {
 
   @Autowired
   CommentMapper commentMapper;
@@ -37,13 +38,14 @@ public class StartController {
   UserInfoMapper userInfoMapper;
 
   /**
+   * sample21というGETリクエストがあったら，sample21()を呼び出して，sample21.htmlを返すメソッド
+   *
    * @param model
-   * @param num
    * @return
    */
-  @PostMapping("/keiji/update")
+  @GetMapping("/thread")
   @Transactional
-  public String update(ModelMap model, @RequestParam String num) {
+  public String thread(ModelMap model) {
     Date date = new Date();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
     String loginDate = dateFormat.format(date);
@@ -51,53 +53,66 @@ public class StartController {
     userInfo.setDate(loginDate);
     userInfoMapper.updateLoginDate(userInfo);
 
-    Thread thread = threadMapper.selectByThreadNumber(Integer.parseInt(num));
-    model.addAttribute("thread", thread);
-    ArrayList<Comment> allComment = commentMapper.selectByThreadNumber(thread.getThreadNumber());
-    model.addAttribute("comment", allComment);
-    return "keiji.html";
+    ArrayList<Thread> allThread = threadMapper.selectAllThread();
+    model.addAttribute("thread", allThread);
+    return "thread.html";
   }
 
   /**
    * @param model
-   * @param num
    * @return
    */
-  @PostMapping("/keiji/comment")
+  @GetMapping("/thread/update")
   @Transactional
-  public String comment(ModelMap model, @RequestParam String num, @RequestParam String userComment) {
+  public String update(ModelMap model) {
     Date date = new Date();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
     String loginDate = dateFormat.format(date);
     UserInfo userInfo = AuthUtil.getUserInfo();
-    String user = userInfo.getName();
+    userInfo.setDate(loginDate);
+    userInfoMapper.updateLoginDate(userInfo);
+
+    ArrayList<Thread> allThread = threadMapper.selectAllThread();
+    model.addAttribute("thread", allThread);
+    return "thread.html";
+  }
+
+  /**
+   * @param model
+   * @return
+   */
+  @PostMapping("/thread/build")
+  @Transactional
+  public String build(@RequestParam String title, @RequestParam String userComment, ModelMap model) {
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+    String loginDate = dateFormat.format(date);
+    UserInfo userInfo = AuthUtil.getUserInfo();
 
     userInfo.setDate(loginDate);
     userInfoMapper.updateLoginDate(userInfo);
 
-    Comment comment = new Comment(user, userComment, loginDate, Integer.parseInt(num));
-    commentMapper.insertComment(comment);
+    if (title == null || userComment == null) {
+      model.addAttribute("errorMessage", "スレッドのタイトルと初期コメントを入力してください");
+    } else {
+      String user = userInfo.getName();
+      Thread thread = new Thread(user, title, loginDate);
 
-    Thread thread = threadMapper.selectByThreadNumber(Integer.parseInt(num));
-    model.addAttribute("thread", thread);
+      threadMapper.insertThread(thread);
+      Comment comment = new Comment(user, userComment, loginDate, threadMapper.selectThreadNumber());
+      commentMapper.insertComment(comment);
 
-    ArrayList<Comment> allComment = commentMapper.selectByThreadNumber(thread.getThreadNumber());
-    int limitNumber = commentMapper.selectCountComment();
-    if (limitNumber >= 20) {
-      commentMapper.deleteAllComment();
-      for (int i = 0; i < 5; i++) {
-        commentMapper.insertCommentCopy(allComment.get(i));
-      }
+      ArrayList<Thread> allThread = threadMapper.selectAllThread();
+      model.addAttribute("thread", allThread);
     }
-    model.addAttribute("comment", allComment);
-    return "keiji.html";
+    return "thread.html";
   }
 
   /**
    * @param model
    * @return
    */
-  @GetMapping("/keiji/admin")
+  @GetMapping("/thread/admin")
   public String admin(ModelMap model) {
     Date date = new Date();
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
@@ -116,7 +131,29 @@ public class StartController {
    * @param num
    * @return
    */
-  @PostMapping("/keiji/good")
+  @GetMapping("/thread/keiji")
+  @Transactional
+  public String keiji(ModelMap model, @RequestParam String num) {
+    Date date = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd kk:mm");
+    String loginDate = dateFormat.format(date);
+    UserInfo userInfo = AuthUtil.getUserInfo();
+    userInfo.setDate(loginDate);
+    userInfoMapper.updateLoginDate(userInfo);
+
+    Thread thread = threadMapper.selectByThreadNumber(Integer.parseInt(num));
+    model.addAttribute("thread", thread);
+    ArrayList<Comment> allComment = commentMapper.selectByThreadNumber(Integer.parseInt(num));
+    model.addAttribute("comment", allComment);
+    return "keiji.html";
+  }
+
+  /**
+   * @param model
+   * @param num
+   * @return
+   */
+  @PostMapping("/thread/good")
   @Transactional
   public String good(ModelMap model, @RequestParam String num) {
     Date date = new Date();
@@ -126,13 +163,10 @@ public class StartController {
     userInfo.setDate(loginDate);
     userInfoMapper.updateLoginDate(userInfo);
 
-    Comment comment = commentMapper.selectByNumber(Integer.parseInt(num));
-    commentMapper.updateComment(comment);
-
-    Thread thread = threadMapper.selectByThreadNumber(comment.getThreadNumber());
-    model.addAttribute("thread", thread);
-    ArrayList<Comment> allComment = commentMapper.selectByThreadNumber(thread.getThreadNumber());
-    model.addAttribute("comment", allComment);
-    return "keiji.html";
+    Thread thread = threadMapper.selectByThreadNumber(Integer.parseInt(num));
+    threadMapper.updateThread(thread);
+    ArrayList<Thread> allThread = threadMapper.selectAllThread();
+    model.addAttribute("thread", allThread);
+    return "thread.html";
   }
 }

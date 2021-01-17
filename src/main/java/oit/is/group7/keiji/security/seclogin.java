@@ -26,13 +26,13 @@ public class seclogin extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
 
 
-    http.authorizeRequests().antMatchers("/h2-console").hasAnyRole("ADMIN","MASTER");
+    http.authorizeRequests().antMatchers("/h2-console", "/admin/**").hasAnyRole("ADMIN","MASTER");
     http.authorizeRequests() // Spring Securityのフォームを利用してログインを行う
-        .antMatchers("/keiji/**", "/modify/**").authenticated()
+        .antMatchers("/thread/**", "/keiji/**", "/modify/**").authenticated()
         .anyRequest().permitAll();
     http.formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/keiji") // ログイン成功時に遷移するURL
+                .defaultSuccessUrl("/thread") // ログイン成功時に遷移するURL
                 .usernameParameter("username") // ログインフォームのユーザー欄のname属性を設定
                 .passwordParameter("password") // ログインフォームのパスワード欄のname属性を設定
                 .failureUrl("/login?error") // ログイン失敗時に遷移するURL

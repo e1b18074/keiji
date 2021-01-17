@@ -8,24 +8,29 @@
 </head>
 
 <body>
-  <h1>掲示板へようこそ! </h1>
   <a href="/logout">ログアウト</a><br>
-
-  <p>
-    <a href="/keiji/update">更新</a><br>
-  </p>
+  <a href="/thread">スレッド一覧に戻る</a><br>
 
   <tbody sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MASTER')">
-    <p>
-      <a href="/keiji/admin">管理者ページ</a><br>
-    </p>
+    <a href="/keiji/admin">管理者ページ</a>
   </tbody>
 
-  <p>
-  <form action="/keiji/comment" method="post">
-    <input type="text" name="userComment" />
-    <input type="submit" value="書き込み">
-  </form>
+  <p th:if="${thread}">
+  <div th:each="thread,stat:${thread}">
+    <form action="/keiji/update" method="post">
+      <input type="hidden" name="num" th:value="${thread.threadNumber}">
+      <input type="submit" value="更新">
+    </form><br>
+    <tr>
+      [[${thread.threadNumber}]] [[${thread.user}]] [[${thread.title}]] [[${thread.date}]]
+      [[${thread.good}]]
+      <form action="/keiji/comment" method="post">
+        <input type="hidden" name="num" th:value="${thread.threadNumber}">
+        <input type="text" name="userComment" />
+        <input type="submit" value="書き込み">
+      </form>
+    </tr>
+  </div>
   </p>
 
   <p th:if="${comment}">
