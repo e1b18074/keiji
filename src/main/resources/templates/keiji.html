@@ -11,6 +11,10 @@
   <a href="/logout">ログアウト</a><br>
   <a href="/thread">スレッド一覧に戻る</a><br>
 
+  <tbody sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MASTER')">
+    <a href="/keiji/admin">管理者ページ</a>
+  </tbody>
+
   <p th:if="${thread}">
   <div th:each="thread,stat:${thread}">
     <form action="/keiji/update" method="post">

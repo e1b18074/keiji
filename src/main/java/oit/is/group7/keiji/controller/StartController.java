@@ -92,11 +92,11 @@ public class StartController {
     model.addAttribute("comment", allComment);
     return "keiji.html";
   }
-/*
+
   /**
    * @param model
    * @return
-   *//*
+   */
   @GetMapping("/keiji/admin")
   public String admin(ModelMap model) {
     Date date = new Date();
@@ -106,10 +106,10 @@ public class StartController {
     userInfo.setDate(loginDate);
     userInfoMapper.updateLoginDate(userInfo);
 
-    ArrayList<Comment> allComment = commentMapper.selectAllComment();
-    model.addAttribute("comment", allComment);
+    ArrayList<Thread> allThread = threadMapper.selectAllThread();
+    model.addAttribute("thread", allThread);
     return "admin.html";
-  }*/
+  }
 
   /**
    * @param model

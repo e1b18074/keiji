@@ -58,6 +58,13 @@ public interface CommentMapper {
   @Delete("DELETE FROM COMMENT WHERE NUMBER =#{number}")
   boolean deleteByNumber(int number);
 
+   /**
+   * @param number
+   * @return
+   */
+  @Delete("DELETE FROM COMMENT WHERE THREADNUMBER = #{threadNumber}")
+  boolean deleteByThreadNumber(int threadNumber);
+
   /**
    * @return
    */

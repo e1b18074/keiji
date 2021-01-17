@@ -14,15 +14,52 @@
   </p>
 
   <p>
-    <a href="/keiji">掲示板に戻る</a>
+    <a href="/thread">スレッド一覧に戻る</a>
   </p>
 
   <tbody sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MASTER')">
-    <p th:if="${comment}">
-      コメント一覧
+    <p th:if="${thread}">
+      スレッド一覧
     <table border="1">
       <thead>
-        <th>コミット番号</th>
+        <th>スレッド番号</th>
+        <th>投稿者名</th>
+        <th>スレッドタイトル</th>
+        <th>投稿日時</th>
+        <th>いいね数</th>
+        <th>表示</th>
+        <th>処理</th>
+      </thead>
+      <tr th:each="thread,stat:${thread}">
+        <td>[[${thread.threadNumber}]]</td>
+        <td>[[${thread.user}]]</td>
+        <td>[[${thread.title}]]</td>
+        <td>[[${thread.date}]]</td>
+        <td>[[${thread.good}]]</td>
+        <td>
+          <form action="/admin/show" method="post">
+            <input type="hidden" name="num" th:value="${thread.threadNumber}" />
+            <input type="submit" value="表示">
+          </form>
+        </td>
+        <td>
+          <form action="/admin/deleteThread" method="post">
+            <input type="hidden" name="num" th:value="${thread.threadNumber}" />
+            <input type="submit" value="削除">
+          </form>
+        </td>
+      <tr>
+    </table>
+    </p>
+
+    <p th:if="${comment}">
+    <p>
+      <a href="/admin">スレッドを表示</a>
+    </p>
+    コメント一覧
+    <table border="1">
+      <thead>
+        <th>コメント番号</th>
         <th>ユーザー名</th>
         <th>コメント内容</th>
         <th>日時</th>
@@ -36,8 +73,8 @@
         <td>[[${comment.date}]]</td>
         <td>[[${comment.good}]]</td>
         <td>
-          <form action="/admin/delete" method="post">
-            <input type="hidden" name="number" th:value="${comment.number}" />
+          <form action="/admin/deleteComment" method="post">
+            <input type="hidden" name="num" th:value="${comment.number}" />
             <input type="submit" value="削除">
           </form>
         </td>
@@ -48,8 +85,8 @@
     <p th:if="${deleteComment}">
     <div th:each="comment,stat:${deleteComment}">
       <tr>
-        [[${deleteComment.number}]] [[${deleteComment.user}]] [[${deleteComment.userComment}]] [[${comment.date}]]
-        [[${comment.good}]]
+        [[${deleteComment.number}]] [[${deleteComment.user}]] [[${deleteComment.userComment}]] [[${deleteComment.date}]]
+        [[${deleteComment.good}]]
         <br>削除しました
       </tr>
     </div>
