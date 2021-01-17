@@ -17,21 +17,31 @@
     <a href="/keiji">掲示板に戻る</a>
   </p>
 
-  <p th:if="${comment}">
-  <div th:each="comment,stat:${comment}">
-    <tr>
-      [[${comment.number}]] [[${comment.user}]] [[${comment.userComment}]]
-      [[${comment.good}]]
-    </tr>
-  </div>
-  </p>
-
-  <tbody sec:authorize="hasRole('ROLE_ADMIN')">
-    削除するコメント番号
-    <form th:action="@{/admin/delete}" method="post">
-      <input type="number" name="number" />
-      <input type="submit" value="削除"><input type="reset" value="リセット">
-    </form>
+  <tbody sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MASTER')">
+    <p th:if="${comment}">
+      コメント一覧
+    <table border="1">
+      <thead>
+        <th>コミット番号</th>
+        <th>ユーザー名</th>
+        <th>コメント内容</th>
+        <th>いいね数</th>
+        <th>処理</th>
+      </thead>
+      <tr th:each="comment,stat:${comment}">
+        <td>[[${comment.number}]]</td>
+        <td>[[${comment.user}]]</td>
+        <td>[[${comment.userComment}]]</td>
+        <td>[[${comment.good}]]</td>
+        <td>
+          <form action="/admin/delete" method="post">
+            <input type="hidden" name="number" th:value="${comment.number}" />
+            <input type="submit" value="削除">
+          </form>
+        </td>
+      <tr>
+    </table>
+    </p>
 
     <p th:if="${deleteComment}">
     <div th:each="comment,stat:${deleteComment}">
@@ -40,6 +50,10 @@
         <br>削除しました
       </tr>
     </div>
+    </p>
+
+    <p th:if="${errorMessage}">
+      [[${errorMessage}]]
     </p>
   </tbody>
 

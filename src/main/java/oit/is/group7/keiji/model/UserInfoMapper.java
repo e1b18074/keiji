@@ -41,8 +41,7 @@ public interface UserInfoMapper {
   /**
    * @param userInfo
    */
-  @Insert("INSERT INTO userInfo (name, password) VALUES (#{name},#{password});")
-  @Options(useGeneratedKeys = true, keyColumn = "number", keyProperty = "number")
+  @Insert("INSERT INTO userInfo (name, password, role) VALUES (#{name},#{password}, #{role});")
   void insertUserInfo(UserInfo userInfo);
 
   /**

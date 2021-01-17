@@ -26,7 +26,7 @@ public class seclogin extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
 
 
-    http.authorizeRequests().antMatchers("/h2-console").hasRole("ADMIN");
+    http.authorizeRequests().antMatchers("/h2-console").hasAnyRole("ADMIN","MASTER");
     http.authorizeRequests() // Spring Securityのフォームを利用してログインを行う
         .antMatchers("/keiji/**", "/modify/**").authenticated()
         .anyRequest().permitAll();
