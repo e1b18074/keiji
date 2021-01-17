@@ -41,7 +41,7 @@ public interface UserInfoMapper {
   /**
    * @param userInfo
    */
-  @Insert("INSERT INTO userInfo (name, password, role) VALUES (#{name},#{password}, #{role});")
+  @Insert("INSERT INTO userInfo (name, password, date, role) VALUES (#{name},#{password},#{date},#{role});")
   void insertUserInfo(UserInfo userInfo);
 
   /**
@@ -49,6 +49,12 @@ public interface UserInfoMapper {
    */
   @Update("UPDATE USERINFO SET NAME = #{name} WHERE NUMBER = #{number}")
   void updateName(UserInfo userInfo);
+
+  /**
+   * @param userInfo
+   */
+  @Update("UPDATE USERINFO SET DATE = #{date} WHERE NAME = #{name}")
+  void updateLoginDate(UserInfo userInfo);
 
   /**
    * @param number

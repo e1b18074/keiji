@@ -30,8 +30,9 @@
 
   <p th:if="${comment}">
   <div th:each="comment,stat:${comment}">
+    <br>
     <tr>
-      [[${comment.number}]] [[${comment.user}]] [[${comment.userComment}]]
+      [[${comment.number}]] [[${comment.user}]] [[${comment.userComment}]] [[${comment.date}]]
       [[${comment.good}]]
       <form action="/keiji/good" method="post">
         <input type="hidden" name="num" th:value="${comment.number}">
