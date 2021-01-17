@@ -15,7 +15,7 @@
     <a href="/keiji/update">更新</a><br>
   </p>
 
-  <tbody sec:authorize="hasRole('ROLE_ADMIN')">
+  <tbody sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MASTER')">
     <p>
       <a href="/keiji/admin">管理者ページ</a><br>
     </p>

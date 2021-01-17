@@ -1,8 +1,2 @@
-INSERT INTO userInfo (number, name, password, role) SELECT * FROM (SELECT 1, 'tabata',  '$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC', 'ROLE_ADMIN')
-WHERE NOT EXISTS (SELECT * FROM userInfo WHERE name = 'tabata');
-INSERT INTO userInfo (number, name, password, role) SELECT * FROM (SELECT 2,  'tanaka',  '$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC', 'ROLE_ADMIN')
-WHERE NOT EXISTS (SELECT * FROM userInfo WHERE name = 'tanaka');
-INSERT INTO userInfo (number, name, password, role) SELECT * FROM (SELECT 3, 'fukuoka',  '$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC', 'ROLE_ADMIN')
-WHERE NOT EXISTS (SELECT * FROM userInfo WHERE name = 'fukuoka');
-INSERT INTO userInfo (number, name, password, role) SELECT * FROM (SELECT 4, 'nagai',  '$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC', 'ROLE_ADMIN')
-WHERE NOT EXISTS (SELECT * FROM userInfo WHERE name = 'nagai');
+INSERT INTO userInfo (number, name, password, role) SELECT * FROM (SELECT 0, 'master',  '$2y$10$rJ9yqGht2W96MdIJICRQQOuUiYrt2eDokKnDuZZof2DPs83PN6QdC', 'ROLE_MASTER')
+WHERE NOT EXISTS (SELECT * FROM userInfo WHERE name = 'master');

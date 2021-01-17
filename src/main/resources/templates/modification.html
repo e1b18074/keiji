@@ -69,6 +69,55 @@
     </p>
   </tbody>
 
+  <tbody sec:authorize="hasRole('ROLE_MASTER')">
+    <p th:if="${adminUserInfo}">
+      ユーザー一覧
+    <table border="1">
+      <thead>
+        <th>ユーザー番号</th>
+        <th>ユーザー名</th>
+        <th>ロール名</th>
+        <th>処理</th>
+      </thead>
+      <tr th:each="userInfo,stat:${userInfo}">
+        <td>[[${userInfo.number}]]</td>
+        <td>[[${userInfo.name}]]</td>
+        <td>[[${userInfo.role}]]</td>
+        <td>
+          <form action="/modify/deleteUser" method="post">
+            <input type="hidden" name="number" th:value="${userInfo.number}" />
+            <input type="submit" value="削除">
+          </form>
+        </td>
+      <tr>
+      <tr th:each="adminUserInfo,stat:${adminUserInfo}">
+        <td>[[${adminUserInfo.number}]]</td>
+        <td>[[${adminUserInfo.name}]]</td>
+        <td>[[${adminUserInfo.role}]]</td>
+        <td>
+          <form action="/modify/deleteAdmin" method="post">
+            <input type="hidden" name="number" th:value="${adminUserInfo.number}" />
+            <input type="submit" value="削除">
+          </form>
+        </td>
+      <tr>
+    </table>
+    </p>
+
+    <p th:if="${errorMessage}">
+      [[${errorMessage}]]
+    </p>
+
+    <p th:if="${deleteUserInfo}">
+    <div th:each="deleteUserInfo,stat:${deleteUserInfo}">
+      <tr>
+        [[${deleteUserInfo.number}]] [[${deleteUserInfo.name}]] [[${deleteUserInfo.role}]]
+        <br>削除しました
+      </tr>
+    </div>
+    </p>
+  </tbody>
+
 </body>
 
 </html>
