@@ -13,10 +13,19 @@ import org.apache.ibatis.annotations.Update;
 public interface CommentMapper {
 
   /**
+   * @param number
    * @return
    */
   @Select("SELECT * from COMMENT WHERE NUMBER = #{number}")
   Comment selectByNumber(int number);
+
+  /**
+   * @param threadNumber
+   * @return
+   */
+  @Select("SELECT * from COMMENT WHERE THREADNUMBER = #{threadNumber}")
+  ArrayList<Comment> selectByThreadNumber(int threadNumber);
+
 
   /**
    * @return
@@ -33,13 +42,13 @@ public interface CommentMapper {
   /**
    * @param comment
    */
-  @Insert("INSERT INTO comment (user,userComment,date) VALUES (#{user},#{userComment},#{date});")
+  @Insert("INSERT INTO comment (user,userComment,date,threadNumber) VALUES (#{user},#{userComment},#{date},#{threadNumber});")
   void insertComment(Comment comment);
 
   /**
    * @param comment
    */
-  @Insert("INSERT INTO comment (number,user,userComment,good) VALUES (#{number},#{user},#{userComment},#{date},#{good});")
+  @Insert("INSERT INTO comment (number,user,userComment,good,threadNumber) VALUES (#{number},#{user},#{userComment},#{date},#{good},#{threadNumber});")
   void insertCommentCopy(Comment comment);
 
   /**

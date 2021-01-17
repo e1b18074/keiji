@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/schema/security">
+
+<head>
+  <meta charset="utf-8">
+  <title>thread</title>
+</head>
+
+<body>
+  <h1>掲示板へようこそ! </h1>
+  <a href="/logout">ログアウト</a><br>
+
+  <p>
+    <a href="/thread/update">更新</a><br>
+  </p>
+
+  <p>
+  <form action="/thread/build" method="post">
+    <input type="text" name="title" placeholder="スレッド名" /><br>
+    <input type="text" name="userComment" placeholder="初期コメント" /><br>
+    <input type="submit" value="立てる">
+  </form>
+  </p>
+
+  <p th:if="${errorMessage}">
+    [[${errorMessage}]]
+  </p>
+
+  <p th:if="${thread}">
+  <div th:each="thread,stat:${thread}">
+    <tr>
+      [[${thread.threadNumber}]] [[${thread.user}]] [[${thread.title}]] [[${thread.date}]]
+      [[${thread.good}]]
+      <form action="/thread/keiji" method="get">
+        <input type="hidden" name="num" th:value="${thread.threadNumber}">
+        <input type="submit" value="開く">
+      </form>
+      <form action="/thread/good" method="post">
+        <input type="hidden" name="num" th:value="${thread.threadNumber}">
+        <input type="submit" value="いいね">
+      </form><br>
+    </tr>
+  </div>
+  </p>
+
+</body>
+
+</html>

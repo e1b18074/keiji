@@ -5,6 +5,7 @@ public class Comment {
   String user;
   String userComment;
   String date;
+  int threadNumber;
   int good;
 
   /**
@@ -14,9 +15,11 @@ public class Comment {
 
   }
 
-  public Comment(String user, String userComment){
+  public Comment(String user, String userComment, String date, int threadNumber){
     this.userComment = userComment;
     this.user = user;
+    this.date = date;
+    this.threadNumber = threadNumber;
   }
 
   public String getUserComment(){
@@ -41,6 +44,14 @@ public class Comment {
 
   public  void setDate(String date){
     this.date = date;
+  }
+
+  public int getThreadNumber(){
+    return threadNumber;
+  }
+
+  public void setThreadNumber(int threadNumber){
+    this.threadNumber = threadNumber;
   }
 
   public int getNumber(){
