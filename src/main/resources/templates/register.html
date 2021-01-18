@@ -17,6 +17,7 @@
   <div th:each="userInfo,stat:${userInfo}">
     <tr>
       [[${userInfo.name}]] [[${userInfo.role}]]
+      ユーザーを追加しました
     </tr>
   </div>
   </p>
@@ -26,12 +27,10 @@
   </p>
 
   <form action="/register/addUser" method="post">
-    <p>
-      <input type="text" id="username" name="username" class="form-control" placeholder="ユーザ名">
-    </p>
-    <p>
-      <input type="password" id="password" name="password" class="form-control" placeholder="パスワード">
-    </p>
+    ユーザー名
+    <input type="text" id="username" name="username" class="form-control" placeholder="ユーザ名"><br>
+    パスワード
+    <input type="password" id="password" name="password" class="form-control" placeholder="パスワード"><br>
     <input type="submit" value="新規登録" />
   </form>
 </body>

@@ -68,10 +68,13 @@ public class ModifyController {
       model.addAttribute("changeMessage", "ロール名がMASTERのユーザは変更できません");
 
     } else if (userInfoMapper.selectByUser(username) == null) {
-      loginUser.setName(username);
-      userInfoMapper.updateName(loginUser);
-      model.addAttribute("changeMessage", "変更しました");
-
+      if (username.isEmpty()) {
+        model.addAttribute("changeMessage", "ユーザー名を入力してください");
+      } else {
+        loginUser.setName(username);
+        userInfoMapper.updateName(loginUser);
+        model.addAttribute("changeMessage", "変更しました");
+      }
     } else {
       model.addAttribute("changeMessage", "そのユーザー名はすでに使用されています");
     }
@@ -158,10 +161,14 @@ public class ModifyController {
     String loginDate = dateFormat.format(date);
 
     if (userInfoMapper.selectByUser(username) == null) {
-      UserInfo userInfo = newAdmin.setAdminInfo(username, password);
-      userInfo.setDate(loginDate);
-      userInfoMapper.insertUserInfo(userInfo);
-      model.addAttribute("userInfo", userInfo);
+      if (username.isEmpty() || password.isEmpty()) {
+        model.addAttribute("errorMessage", "ユーザー名とパスワードを入力してください");
+      } else {
+        UserInfo userInfo = newAdmin.setAdminInfo(username, password);
+        userInfo.setDate(loginDate);
+        userInfoMapper.insertUserInfo(userInfo);
+        model.addAttribute("userInfo", userInfo);
+      }
     } else {
       model.addAttribute("errorMessage", "そのユーザー名はすでに使用されています");
     }

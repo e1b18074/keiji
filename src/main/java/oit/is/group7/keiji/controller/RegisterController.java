@@ -44,10 +44,14 @@ public class RegisterController {
     String loginDate = dateFormat.format(date);
 
     if (userInfoMapper.selectByUser(username) == null) {
-      UserInfo userInfo = newUser.setUserInfo(username, password);
-      userInfo.setDate(loginDate);
-      userInfoMapper.insertUserInfo(userInfo);
-      model.addAttribute("userInfo", userInfo);
+      if (username.isEmpty() || password.isEmpty()) {
+        model.addAttribute("errorMessage", "ユーザー名とパスワードを入力してください");
+      } else {
+        UserInfo userInfo = newUser.setUserInfo(username, password);
+        userInfo.setDate(loginDate);
+        userInfoMapper.insertUserInfo(userInfo);
+        model.addAttribute("userInfo", userInfo);
+      }
     } else {
       model.addAttribute("errorMessage", "そのユーザー名はすでに使用されています");
     }

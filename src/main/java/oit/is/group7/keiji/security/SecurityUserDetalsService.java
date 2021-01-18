@@ -56,7 +56,7 @@ class SecurityUserDetailsService implements UserDetailsService {
             // 例外を捕まえ、適正なメッセージを持った別の例外に変えて投げ直す。
             // こうしておかないと、発生した元のExceptionの持つエラーメッセージがログイン画面に表示されてしまう
             throw new DbAccessException(
-                    messageSource.getMessage("データベースへの接続に失敗しました", null, LocaleContextHolder.getLocale()), e);
+                    messageSource.getMessage("demo.unexpectedError", null, LocaleContextHolder.getLocale()), e);
         }
     }
 

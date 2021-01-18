@@ -11,11 +11,12 @@
 
   <p>
     <a href="/logout">ログアウト</a>
-  </p>
+  </p><br>
 
   <p th:if="${loginUser}">
   <div th:each="userInfo,stat:${loginUser}">
     <tr>
+      ログイン中のユーザー
       [[${loginUser.name}]] [[${loginUser.role}]]
     </tr>
   </div>
@@ -72,12 +73,18 @@
   </tbody>
 
   <tbody sec:authorize="hasRole('ROLE_MASTER')">
-    追加する管理者情報を入力してください
+    ADMINロールを所持する管理者を追加します、ユーザー名とパスワードを入力してください
     <form action="/modify/addAdmin" method="post">
+      ユーザー名
       <input type="text" id="username" name="username" class="form-control" placeholder="ユーザ名"><br>
-      <input type="password" id="password" name="password" class="form-control" placeholder="パスワード">
-      <br><input type="submit" value="登録" />
+      パスワード
+      <input type="password" id="password" name="password" class="form-control" placeholder="パスワード"><br>
+      <input type="submit" value="登録" />
     </form>
+
+    <p th:if="${errorMessage}">
+      [[${errorMessage}]]
+    </p>
 
     <p th:if="${adminUserInfo}">
       ユーザー一覧
@@ -114,10 +121,6 @@
         </td>
       <tr>
     </table>
-    </p>
-
-    <p th:if="${errorMessage}">
-      [[${errorMessage}]]
     </p>
 
     <p th:if="${deleteUserInfo}">
