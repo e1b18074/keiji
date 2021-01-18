@@ -3,7 +3,14 @@
 スレッド型の掲示板プログラム．
 
 # Link
+
+# Setup Manual
+セットアップマニュアルに従って掲示板アプリのセットアップを行ってください
+ https://github.com/e1b18074/keiji/blob/master/docs/SetUpManual.txt
  
+# User Manual
+掲示板アプリの使い方のマニュアルです。
+　https://github.com/e1b18074/keiji/blob/master/docs/UserManual.txt
 # Requirement
  
 * 'org.projectlombok:lombok
