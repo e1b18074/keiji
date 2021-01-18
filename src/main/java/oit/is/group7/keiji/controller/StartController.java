@@ -79,6 +79,9 @@ public class StartController {
     commentMapper.insertComment(comment);
 
     Thread thread = threadMapper.selectByThreadNumber(Integer.parseInt(num));
+    thread.setDate(loginDate);
+    threadMapper.updateDate(thread);
+
     model.addAttribute("thread", thread);
 
     ArrayList<Comment> allComment = commentMapper.selectByThreadNumber(thread.getThreadNumber());

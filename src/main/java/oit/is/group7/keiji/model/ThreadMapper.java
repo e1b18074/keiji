@@ -57,4 +57,10 @@ public interface ThreadMapper {
   @Update("UPDATE THREAD SET GOOD= #{good}+1 WHERE THREADNUMBER = #{threadNumber}")
   void updateThread(Thread Thread);
 
+  /**
+   * @param thread
+   */
+  @Update("UPDATE THREAD SET Date= #{date} WHERE THREADNUMBER = #{threadNumber}")
+  void updateDate(Thread Thread);
+
 }

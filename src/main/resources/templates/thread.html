@@ -20,7 +20,7 @@
     <input type="text" name="userComment" placeholder="初期コメント" /><br>
     <input type="submit" value="立てる">
   </form>
-  </p>
+  </p><br>
 
   <p th:if="${errorMessage}">
     [[${errorMessage}]]
@@ -29,8 +29,8 @@
   <p th:if="${thread}">
   <div th:each="thread,stat:${thread}">
     <tr>
-      [[${thread.threadNumber}]] [[${thread.user}]] [[${thread.title}]] [[${thread.date}]]
-      [[${thread.good}]]
+      [[${thread.threadNumber}]] 投稿者:[[${thread.user}]] タイトル:[[${thread.title}]] 最終投稿日:[[${thread.date}]]
+      総イイね数:[[${thread.good}]]
       <form action="/thread/keiji" method="get">
         <input type="hidden" name="num" th:value="${thread.threadNumber}">
         <input type="submit" value="開く">
