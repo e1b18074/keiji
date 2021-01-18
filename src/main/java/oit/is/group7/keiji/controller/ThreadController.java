@@ -92,7 +92,7 @@ public class ThreadController {
     userInfo.setDate(loginDate);
     userInfoMapper.updateLoginDate(userInfo);
 
-    if (title == null || userComment == null) {
+    if (title.isEmpty() || userComment.isEmpty()) {
       model.addAttribute("errorMessage", "スレッドのタイトルと初期コメントを入力してください");
     } else {
       String user = userInfo.getName();
@@ -101,10 +101,9 @@ public class ThreadController {
       threadMapper.insertThread(thread);
       Comment comment = new Comment(user, userComment, loginDate, threadMapper.selectThreadNumber());
       commentMapper.insertComment(comment);
-
-      ArrayList<Thread> allThread = threadMapper.selectAllThread();
-      model.addAttribute("thread", allThread);
     }
+    ArrayList<Thread> allThread = threadMapper.selectAllThread();
+    model.addAttribute("thread", allThread);
     return "thread.html";
   }
 

@@ -75,13 +75,16 @@ public class StartController {
     userInfo.setDate(loginDate);
     userInfoMapper.updateLoginDate(userInfo);
 
-    Comment comment = new Comment(user, userComment, loginDate, Integer.parseInt(num));
-    commentMapper.insertComment(comment);
+    if (userComment.isEmpty()) {
+      model.addAttribute("errorMessage", "コメントを入力してください");
+    } else {
+      Comment comment = new Comment(user, userComment, loginDate, Integer.parseInt(num));
+      commentMapper.insertComment(comment);
+    }
 
     Thread thread = threadMapper.selectByThreadNumber(Integer.parseInt(num));
     thread.setDate(loginDate);
     threadMapper.updateDate(thread);
-
     model.addAttribute("thread", thread);
 
     ArrayList<Comment> allComment = commentMapper.selectByThreadNumber(thread.getThreadNumber());
