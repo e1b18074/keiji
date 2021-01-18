@@ -88,13 +88,6 @@ public class StartController {
     model.addAttribute("thread", thread);
 
     ArrayList<Comment> allComment = commentMapper.selectByThreadNumber(thread.getThreadNumber());
-    int limitNumber = commentMapper.selectCountComment();
-    if (limitNumber >= 20) {
-      commentMapper.deleteAllComment();
-      for (int i = 0; i < 5; i++) {
-        commentMapper.insertCommentCopy(allComment.get(i));
-      }
-    }
     model.addAttribute("comment", allComment);
     return "keiji.html";
   }
